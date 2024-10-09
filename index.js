@@ -1,5 +1,9 @@
-const express = require ('express')
-const app = express()
+const express = require('express');
+const cors = require('cors');
+const app = express();
+
+app.use(cors()); // Adicione esta linha
+app.use(express.json());
 
 app.use (express.json())
 
@@ -18,12 +22,12 @@ let filmes = [
         sinopse: "O físico J. Robert Oppenheimer trabalha com uma equipe de cientistas durante o Projeto Manhattan, levando ao desenvolvimento da bomba atômica."
     },
     {
-    titulo: "The Batman",
-    sinopse: "Após dois anos espreitando as ruas como Batman, Bruce Wayne se encontra nas profundezas mais sombrias de Gotham City. Com poucos aliados confiáveis, o vigilante solitário se estabelece como a personificação da vingança para a população."
+        titulo: "The Batman",
+        sinopse: "Após dois anos espreitando as ruas como Batman, Bruce Wayne se encontra nas profundezas mais sombrias de Gotham City. Com poucos aliados confiáveis, o vigilante solitário se estabelece como a personificação da vingança para a população."
     },
     {
-    titulo: "Mad Max",
-    sinopse: "Em um mundo pós-apocalíptico, Max Rockatansky acredita que a melhor forma de sobreviver é não depender de ninguém. Porém, após ser capturado pelo tirano Immortan Joe e seus rebeldes, Max se vê no meio de uma guerra mortal iniciada pela Imperatriz Furiosa, que tenta salvar um grupo de garotas. Também tentando fugir, Max aceita ajudá-la."
+        titulo: "Mad Max",
+        sinopse: "Em um mundo pós-apocalíptico, Max Rockatansky acredita que a melhor forma de sobreviver é não depender de ninguém. Porém, após ser capturado pelo tirano Immortan Joe e seus rebeldes, Max se vê no meio de uma guerra mortal iniciada pela Imperatriz Furiosa, que tenta salvar um grupo de garotas. Também tentando fugir, Max aceita ajudá-la."
     }
 ] 
 app.get("/filmes", (req, res) => {
