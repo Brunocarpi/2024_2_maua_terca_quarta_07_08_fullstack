@@ -14,5 +14,6 @@ async function obterFilmes () {
         celulaTitulo.innerHTML = filme.titulo
         celulaSinopse.innerHTML = filme.sinopse
     }
-    //console.log (filmes)
+
+    // console.log (filmes)
 }
