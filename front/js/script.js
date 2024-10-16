@@ -43,10 +43,21 @@ async function cadastrarFilme() {
     let sinopseInput = document.querySelector('#sinopseInput')
     let titulo = tituloInput.value
     let sinopse = sinopseInput.value
-    tituloInput.value = ""
-    sinopseInput.value = ""
-    const filmes = (await axios.post(URLcompleta, {titulo, sinopse})).data
-    listarFilmes(filmes)
+    if (titulo && sinopse) {
+        tituloInput.value = ""
+        sinopseInput.value = ""
+        const filmes = (await axios.post(URLcompleta, {titulo, sinopse})).data
+        listarFilmes(filmes)
+    }
+    else {
+        let alert = document.querySelector('.alert')
+        alert.classList.add('show')
+        alert.classList.remove('d-none')
+        setTimeout(() => {
+            alert.classList.remove('show')
+            alert.classList.add('d-none')
+        }, 2000)
+    }
 
     let tabela = document.querySelector('.filmes')
     let corpoTabela = tabela.getElementsByTagName('tbody'[0])

@@ -1,5 +1,9 @@
+// string de conexão com o mongo
+//mongodb+srv://usuario_mongo:brunocarpi385:<db_password>senha_mongo:@bruno.kkmhe.mongodb.net/?retryWrites=true&w=majority&appName=Bruno
+
 const express = require('express');
 const cors = require('cors');
+const mongoose = require('mongoose')
 const app = express();
 
 app.use(cors()); // Adicione esta linha
