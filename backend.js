@@ -27,8 +27,6 @@ async function conectarAoMongo (){
     await mongoose.connect(`mongodb+srv://brunocarpi385:bruno2016@bruno.kkmhe.mongodb.net/?retryWrites=true&w=majority&appName=Bruno`)
 }
 
-
-
 app.get("/filmes", async (req, res) => {
     const filmes = await Filme.find()
     res.json(filmes)
