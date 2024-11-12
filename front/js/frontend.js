@@ -2,6 +2,25 @@ const protocolo = 'http://'
 const baseURL = 'localhost:3000'
 
 
+
+
+function exibeAlerta (seletor,innerHTML, classesTOAdd, classesTORemove, timeout) {
+            let alert = document.querySelector(seletor)
+            alert.innerHTML = innerHTML
+            alert.classList.add (...classesTOAdd)
+            alert.classList.remove (...classesTORemove)
+            setTimeout (() => {
+                alert.classList.remove(...classesTOAdd)
+                alert.classList.add (...classesTORemove)
+            }, timeout)
+}
+function escondeModal (idModal, timeout) {
+        setTimeout (() => {
+        let modal = bootstrap.Modal.getInstance(document.querySelector(idModal))
+        modal.hide()
+    }, timeout)
+}
+
 async function obterFilmes() {
     const filmesEndpoint = '/filmes'
     const URLcompleta = `${protocolo}${baseURL}${filmesEndpoint}`;
@@ -52,15 +71,9 @@ async function cadastrarFilme() {
         listarFilmes(filmes)
     }
     else {
-        let alert = document.querySelector('.alert')
-        alert.classList.add('show')
-        alert.classList.remove('d-none')
-        setTimeout(() => {
-            alert.classList.remove('show')
-            alert.classList.add('d-none')
-        }, 2000)
+        exibeAlerta('.alert-filme', "Preencha todos os campos!!!", ['alert-danger', 'show'], ['d-none'], 2000)
     }
-
+}
 async function cadastrarUsuario(){
     let usuarioCadastroInput = document.querySelector('#usuarioCadastroInput')
     let passwordCadastroInput = document.querySelector('#passwordCadastroInput')
@@ -72,56 +85,24 @@ async function cadastrarUsuario(){
             const cadastroEndpoint = '/signup'
             const URLcompleta = `${protocolo}${baseURL}${cadastroEndpoint}`
             await axios.post(URLcompleta,{login: usuarioCadastro, password: passwordCadastro})
+
             usuarioCadastroInput.value = ""
             passwordCadastroInput.value = ""
-            let alert = document.querySelector('.alert-modal-cadastro')
-            alert.innerHTML = "Usuário cadastrado com sucesso!!!"
-            alert.classList.add ('show', 'alert-success')
-            alert.classList.remove ('d-none')
-            setTimeout (() => {
-                alert.classList.remove('show', 'alert-success')
-                alert.classList.add ('d-none')
-                let modalCadastro = bootstrap.Modal.getInstance(document.querySelector('#modalCadastro'))
-                modalCadastro.hide()
-            }, 2000)
+
+            exibeAlerta('.alert-modal-cadastro', "Usuário cadastrado com sucesso!!!", ['show', 'alert-success'], ['d-none'], 2000)
+
+            escondeModal('#modalCadastro', 2000)
         }
         catch (e){
-            usuarioCadastroInput.value = ""
-            passwordCadastroInput.value = ""
-            let alert = document.querySelector('.alert-modal-cadastro')
-            alert.innerHTML = "Não foi possível realizar o cadastro!!!"
-            alert.classList.add ('show', 'alert-danger')
-            alert.classList.remove ('d-none')
-            setTimeout (() => {
-                alert.classList.remove('show', 'alert-danger')
-                alert.classList.add ('d-none')
-                alert.classList.remove('show', 'alert-success')
-                alert.classList.add ('d-none')
-                let modalCadastro = bootstrap.Modal.getInstance(document.querySelector('#modalCadastro'))
-            modalCadastro.hide()
-            }, 2000)
+            
+            exibeAlerta('.alert-modal-cadastro', "Não foi possível realizar o cadastro!!!", ['show', 'alert-danger'], ['d-none'], 2000)
+
+            escondeModal('#modalCadastro', 2000)
         }
     }
     else {
-        let alert = document.querySelector('.alert-modal-cadastro')
-        alert.innerHTML = "Preencha todos os campos!"
-        alert.classList.add ('show', 'alert-danger')
-        alert.classList.remove ('d-none')
-        setTimeout (() => {
-            alert.classList.remove('show', 'alert-danger')
-            alert.classList.add ('d-none')
-        }, 2000)
+        exibeAlerta('.alert-modal-cadastro', "Preencha todos os campos!!!", ['show', 'alert-danger'], ['d-none'], 2000)
+
     }
 }
 
-    let tabela = document.querySelector('.filmes')
-    let corpoTabela = tabela.getElementsByTagName('tbody'[0])
-    corpoTabela.innerHTML=""
-    for (let filme of filmes) {
-        let linha = corpoTabela.insertRow(0);
-        let celulaTitulo = linha.insertCell(0);
-        let celulaSinopse = linha.insertCell(1);
-        celulaTitulo.innerHTML = filme.titulo;
-        celulaSinopse.innerHTML = filme.sinopse;
-    }
-}
